@@ -14,13 +14,28 @@ class HomeController extends Controller
 
 
 
+        // 1) If month & year are selected → generate from/to
+        if ($request->filled('month') && $request->filled('year')) {
+            $from = Carbon::create($request->year, $request->month, 1)->startOfDay();
+            $to   = Carbon::create($request->year, $request->month, 1)->endOfMonth()->endOfDay();
 
-        if (!$request->has('from') || !$request->has('to')) {
-            $request->merge(['from' => Carbon::now()->subDay(30)->toDateString()]);
-            $request->merge(['to' => Carbon::now()->toDateString()]);
+            $request->merge([
+                'from' => $from->toDateString(),
+                'to'   => $to->toDateString(),
+            ]);
+        }
+
+        // 2) Default dates when nothing selected → current month
+        if (!$request->filled('from') || !$request->filled('to')) {
+            $request->merge([
+                'from' => Carbon::now()->startOfMonth()->toDateString(),
+                'to'   => Carbon::now()->endOfMonth()->toDateString(),
+            ]);
         }
 
         $user = Auth::user();
+
         return view('dashboard.home', compact('user'));
     }
-    }
+}
+    

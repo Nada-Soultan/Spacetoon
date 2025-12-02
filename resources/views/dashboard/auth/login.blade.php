@@ -18,7 +18,7 @@
 
                                 <div class="z-index-1 position-relative"><a
                                         class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder"
-                                        href=""> <img style="width:150px" src="{{ asset('assets/img/logo.png') }}"
+                                        href=""> <img style="width:150px" src="{{ asset('assets/img/logos/spacetoon1.png') }}"
                                             alt="">
                                     </a>
                                     <p class="opacity-75 text-white">

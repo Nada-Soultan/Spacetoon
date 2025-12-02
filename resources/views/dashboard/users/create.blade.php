@@ -140,5 +140,8 @@
             </div>
 
         </div>
+
+         <div class="card-footer d-flex align-items-center justify-content-center">
+        </div>
     </div>
 @endsection

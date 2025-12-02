@@ -6,7 +6,7 @@
         <div class="card-header">
             <div class="row flex-between-center">
                 <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">{{ __('Edit expense') }}</h5>
+                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">{{ __('Edit Expense') }}</h5>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
 
                             <div class="mb-3">
                                 <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit">{{ __('Edit expense') }}</button>
+                                    name="submit">{{ __('Edit Expense') }}</button>
                             </div>
                         </form>
 

@@ -31,13 +31,11 @@
                         <form style="display: inline-block" action="">
 
                             <div class="d-inline-block">
-                                {{-- <label class="form-label" for="from">{{ __('From') }}</label> --}}
                                 <input type="date" id="from" name="from" class="form-control form-select-sm"
                                     value="{{ request()->from }}">
                             </div>
 
                             <div class="d-inline-block">
-                                {{-- <label class="form-label" for="to">{{ __('To') }}</label> --}}
                                 <input type="date" id="to" name="to"
                                     class="form-control form-select-sm sonoo-search" value="{{ request()->to }}">
                             </div>
@@ -76,10 +74,6 @@
                         <a href="{{ route('users.trashed') }}" class="btn btn-falcon-default btn-sm" type="button"><span
                                 class="fas fa-trash" data-fa-transform="shrink-3 down-2"></span><span
                                 class="d-none d-sm-inline-block ms-1">{{ __('Trash') }}</span></a>
-                        {{-- <a href="{{ route('users.export', ['role_id' => request()->role_id, 'from' => request()->from, 'to' => request()->to]) }}"
-                            class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt"
-                                data-fa-transform="shrink-3 down-2"></span><span
-                                class="d-none d-sm-inline-block ms-1">{{ __('Export') }}</span></a> --}}
                     </div>
                 </div>
             </div>
@@ -90,12 +84,6 @@
                     <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
                         <thead class="bg-200 text-900">
                             <tr>
-                                {{-- <th>
-                                    <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                                        <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox"
-                                            data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-                                    </div>
-                                </th> --}}
                                 <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">{{ __('Name') }}
                                 </th>
                                 <th class="sort pe-1 align-middle white-space-nowrap" data-sort="phone">{{ __('Phone') }}
@@ -116,26 +104,22 @@
                         <tbody class="list" id="table-customers-body">
                             @foreach ($users as $user)
                                 <tr class="btn-reveal-trigger">
-                                    {{-- <td class="align-middle py-2" style="width: 28px;">
-                                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                                            <input class="form-check-input bulk-checkbox" type="checkbox" name="ids[]"
-                                                value="{{ $user->id }}">
-
-                                        </div>
-                                    </td> --}}
-                                    <td class="name align-middle white-space-nowrap py-2"><a
-                                            href="{{ route('users.show', ['user' => $user->id]) }}">
-                                            <div class="d-flex d-flex align-items-center">
-                                                <div class="avatar avatar-xl me-2">
-                                                    <img class="rounded-circle"
-                                                        src="{{ asset('storage/images/users/' . $user->profile) }}"
-                                                        alt="" />
-                                                </div>
-                                                <div class="flex-1">
-                                                    <h5 class="mb-0 fs--1">{{ $user->name }}</h5>
-                                                </div>
+                                    <td class="name align-middle white-space-nowrap py-2">
+                                        <div class="d-flex d-flex align-items-center">
+                                            <div class="avatar avatar-xl me-2" style="cursor: pointer;" 
+                                                 data-bs-toggle="modal" 
+                                                 data-bs-target="#photo-modal-{{ $user->id }}"
+                                                 title="{{ __('Click to view larger photo') }}">
+                                                <img class="rounded-circle"
+                                                    src="{{ asset('storage/images/users/' . $user->profile) }}"
+                                                    alt="{{ $user->name }}"
+                                                    onerror="this.src='{{ asset('assets/img/avatar/avatarmale.png') }}'" />
                                             </div>
-                                        </a></td>
+                                            <div class="flex-1">
+                                                <h5 class="mb-0 fs--1">{{ $user->name }}</h5>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td class="phone align-middle white-space-nowrap py-2"><a
                                             href="tel:{{ $user->phone }}">{{ $user->phone }}</a></td>
                                     <td class="address align-middle white-space-nowrap py-2">
@@ -147,7 +131,6 @@
                                         @endforeach
                                     </td>
                                     <td class="phone align-middle white-space-nowrap py-2">
-
                                         @if (hasVerifiedPhone($user))
                                             <span class='badge badge-soft-success'>{{ __('Active') }}</span>
                                         @elseif (!hasVerifiedPhone($user))
@@ -200,54 +183,48 @@
                                     </td>
                                 </tr>
 
-                                <!-- start bonus modal for each user -->
-                                {{-- <div class="modal fade" id="bonus-modal-{{ $user->id }}" tabindex="-1"
-                                    role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document"
-                                        style="max-width: 500px">
-                                        <div class="modal-content position-relative">
-                                            <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
-                                                <button
-                                                    class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
-                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                <!-- Photo Preview Modal -->
+                                <div class="modal fade" id="photo-modal-{{ $user->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ $user->name }}</h5>
+                                                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form method="POST"
-                                                action="{{ route('users.bonus', ['user' => $user->id]) }}">
-                                                @csrf
-                                                <div class="modal-body p-0">
-                                                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                                        <h4 class="mb-1" id="modalExampleDemoLabel">
-                                                            {{ __('Add bonus') . ' - ' . $user->name }}</h4>
-                                                    </div>
-                                                    <div class="p-4 pb-0">
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="bonus">{{ __('Enter bonus amount') }}</label>
-                                                            <input name="bonus"
-                                                                class="form-control @error('bonus') is-invalid @enderror"
-                                                                value="{{ old('bonus') }}" type="number"
-                                                                autocomplete="on" id="bonus" autofocus required />
-                                                            @error('bonus')
-                                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                            <div class="modal-body text-center p-4">
+                                                <img src="{{ asset('storage/images/users/' . $user->profile) }}" 
+                                                     class="img-fluid rounded" 
+                                                     alt="{{ $user->name }}"
+                                                     style="max-height: 500px; width: auto;"
+                                                     onerror="this.src='{{ asset('assets/img/avatar/avatarmale.png') }}'">
+                                                <div class="mt-3">
+                                                    <p class="mb-1"><strong>{{ __('Name') }}:</strong> {{ $user->name }}</p>
+                                                    <p class="mb-1"><strong>{{ __('Email') }}:</strong> {{ $user->email }}</p>
+                                                    <p class="mb-1"><strong>{{ __('Phone') }}:</strong> {{ $user->phone }}</p>
+                                                    <p class="mb-1">
+                                                        <strong>{{ __('Roles') }}:</strong>
+                                                        @foreach ($user->roles as $role)
+                                                            <span class="badge badge-soft-primary">{{ $role->name }}</span>
+                                                        @endforeach
+                                                    </p>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-secondary" type="button"
-                                                        data-bs-dismiss="modal">{{ __('Close') }}</button>
-                                                    <button class="btn btn-primary"
-                                                        type="submit">{{ __('Add') }}</button>
-                                                </div>
-                                            </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                @if(auth()->user()->hasPermission('users-update'))
+                                                    <a href="{{ route('users.edit', ['user' => $user->id]) }}" 
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-edit me-1"></i>{{ __('Edit User') }}
+                                                    </a>
+                                                @endif
+                                                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                                                    {{ __('Close') }}
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> --}}
-                                <!-- end bonus modal for each user -->
+                                </div>
                             @endforeach
                         </tbody>
-
                     </table>
                 @else
                     <h3 class="p-4">{{ __('No Users To Show') }}</h3>
@@ -255,10 +232,44 @@
             </div>
         </div>
 
-
         <div class="card-footer d-flex align-items-center justify-content-center">
             {{ $users->appends(request()->query())->links() }}
         </div>
-
     </div>
+
+    <style>
+        .avatar img:hover {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .avatar[data-bs-toggle="modal"] {
+            position: relative;
+        }
+        
+        .avatar[data-bs-toggle="modal"]::after {
+            content: '\f002'; /* Font Awesome search icon */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .avatar[data-bs-toggle="modal"]:hover::after {
+            opacity: 1;
+        }
+    </style>
 @endsection

@@ -27,7 +27,6 @@
                         </div>
                     </div>
                     <div id="table-customers-replace-element">
-
                         @if (auth()->user()->hasPermission('classes-create'))
                             <a href="{{ route('classes.create') }}" class="btn btn-falcon-default btn-sm"
                                 type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span
@@ -36,9 +35,6 @@
                         <a href="{{ route('classes.trashed') }}" class="btn btn-falcon-default btn-sm" type="button"><span
                                 class="fas fa-trash" data-fa-transform="shrink-3 down-2"></span><span
                                 class="d-none d-sm-inline-block ms-1">{{ __('Trash') }}</span></a>
-                        {{-- <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt"
-                                data-fa-transform="shrink-3 down-2"></span><span
-                                class="d-none d-sm-inline-block ms-1">{{ __('Export') }}</span></button> --}}
                     </div>
                 </div>
             </div>
@@ -49,23 +45,14 @@
                     <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
                         <thead class="bg-200 text-900">
                             <tr>
-                                {{-- <th>
-                                    <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                                        <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox"
-                                            data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-                                    </div>
-                                </th> --}}
                                 <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">{{ __('Name') }}
                                 </th>
-
                                 <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">
                                     {{ __('Teacher Name') }}
                                 </th>
-
                                 <th class="sort pe-1 align-middle white-space-nowrap" data-sort="tech_update">
                                     {{ __('Class Details') }}
                                 </th>
-
                                 <th class="sort pe-1 align-middle white-space-nowrap" style="min-width: 100px;"
                                     data-sort="joined">{{ __('Created at') }}</th>
                                 @if ($classes->count() > 0 && $classes[0]->trashed())
@@ -78,47 +65,40 @@
                         <tbody class="list" id="table-customers-body">
                             @foreach ($classes as $class)
                                 <tr class="btn-reveal-trigger">
-                                    {{-- <td class="align-middle py-2" style="width: 28px;">
-                                        <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                                            <input class="form-check-input" type="checkbox" id="customer-0"
-                                                data-bulk-select-row="data-bulk-select-row" />
-                                        </div>
-                                    </td> --}}
                                     <td class="name align-middle white-space-nowrap py-2">
                                         <div class="d-flex d-flex align-items-center">
-
                                             <div class="flex-1">
                                                 <h5 class="mb-0 fs--1">
-                                                    {{ $class->class_name }}
-                                                    {{-- {{ app()->getLocale() == 'ar' ? $class->name_ar : $class->name_en }} --}}
+                                                    {{ $class->class_name ?? 'N/A' }}
                                                 </h5>
                                             </div>
                                         </div>
                                     </td>
 
-
-
                                     <td class="name align-middle white-space-nowrap py-2">
                                         <div class="d-flex d-flex align-items-center">
-
                                             <div class="flex-1">
                                                 <h5 class="mb-0 fs--1">
-                                                    {{ $class->user->name }}
-                                                    {{-- {{ app()->getLocale() == 'ar' ? $class->name_ar : $class->name_en }} --}}
+                                                    {{ $class->user?->name ?? __('No Teacher Assigned') }}
                                                 </h5>
+                                                @if(!$class->user)
+                                                    <small class="text-danger">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        {{ __('Teacher deleted or not found') }}
+                                                    </small>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
 
                                     <td class="joined align-middle py-2">
                                         @if ($class->class_name != null)
-                                            <button class="btn btn-outline-success me-1 mb-1" type="button"
+                                            <button class="btn btn-sm btn-outline-success me-1 mb-1" type="button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#show-task-{{ $class->id }}">{{ __('show') }}
                                             </button>
                                         @endif
                                     </td>
-
 
                                     <td class="joined align-middle py-2">{{ $class->created_at }} <br>
                                         {{ interval($class->created_at) }} </td>
@@ -129,11 +109,11 @@
                                     <td class="align-middle white-space-nowrap py-2 text-end">
                                         <div class="dropdown font-sans-serif position-static">
                                             <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal"
-                                                type="button" id="customer-dropdown-0" data-bs-toggle="dropdown"
+                                                type="button" id="customer-dropdown-{{ $class->id }}" data-bs-toggle="dropdown"
                                                 data-boundary="window" aria-haspopup="true" aria-expanded="false"><span
                                                     class="fas fa-ellipsis-h fs--1"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end border py-0"
-                                                aria-labelledby="customer-dropdown-0">
+                                                aria-labelledby="customer-dropdown-{{ $class->id }}">
                                                 <div class="bg-white py-2">
                                                     @if ($class->trashed() && auth()->user()->hasPermission('classes-restore'))
                                                         <a class="dropdown-item"
@@ -158,9 +138,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-
                     </table>
-
 
                     @foreach ($classes as $class)
                         <div class="modal fade" id="show-task-{{ $class->id }}" tabindex="-1" role="dialog"
@@ -174,78 +152,96 @@
                                     <div class="modal-body p-0">
                                         <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
                                             <h4 class="mb-1" id="modalExampleDemoLabel">
-                                                {{ __('Details') }}
+                                                {{ __('Class Details') }}
                                             </h4>
                                         </div>
                                         <div class="p-4 pb-0">
-
                                             <div class="table-responsive scrollbar">
                                                 <table class="table table-bordered overflow-hidden">
                                                     <colgroup>
-                                                        <col class="bg-soft-primary" />
+                                                        <col class="bg-soft-primary" style="width: 40%;" />
                                                         <col />
                                                     </colgroup>
-
                                                     <tbody>
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Class Name') }}</td>
-                                                            <td> {{ $class->class_name }}</td>
+                                                        <tr>
+                                                            <td><strong>{{ __('Class Name') }}</strong></td>
+                                                            <td>{{ $class->class_name ?? 'N/A' }}</td>
                                                         </tr>
 
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Class Stage') }}</td>
-                                                            <td> {{ $class->class_stage }}</td>
+                                                        <tr>
+                                                            <td><strong>{{ __('Class Stage') }}</strong></td>
+                                                            <td>{{ $class->class_stage ?? 'N/A' }}</td>
                                                         </tr>
 
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Teacher Name') }}</td>
-                                                            <td>{{ $class->user->name }}</td>
-                                                        </tr>
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('No Of Students') }}</td>
-                                                            <td>{{ $class->students_no }}</td>
-                                                        </tr>
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Students') }}</td>
+                                                        <tr>
+                                                            <td><strong>{{ __('Teacher Name') }}</strong></td>
                                                             <td>
-                                                                @foreach ($class->students as $index => $student)
-                                                                    {{ $index + 1 }}.
-                                                                    {{ optional($student->user)->name ?: '' }}<br>
-                                                                @endforeach
+                                                                @if($class->user)
+                                                                    {{ $class->user->name }}
+                                                                @else
+                                                                    <span class="text-danger">
+                                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                                        {{ __('No Teacher Assigned') }}
+                                                                    </span>
+                                                                @endif
                                                             </td>
-
                                                         </tr>
 
+                                                        <tr>
+                                                            <td><strong>{{ __('No Of Students') }}</strong></td>
+                                                            <td>{{ $class->students_no ?? 0 }}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><strong>{{ __('Students') }}</strong></td>
+                                                            <td>
+                                                                @if($class->students && $class->students->count() > 0)
+                                                                    @foreach ($class->students as $index => $student)
+                                                                        <div class="mb-1">
+                                                                            {{ $index + 1 }}.
+                                                                            @if($student->user)
+                                                                                {{ $student->user->name }}
+                                                                            @else
+                                                                                <span class="text-muted">
+                                                                                    {{ __('Student user deleted') }}
+                                                                                </span>
+                                                                            @endif
+                                                                        </div>
+                                                                    @endforeach
+                                                                @else
+                                                                    <span class="text-muted">
+                                                                        {{ __('No students enrolled') }}
+                                                                    </span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
-
-
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button"
+                                        @if(auth()->user()->hasPermission('classes-update'))
+                                            <a href="{{ route('classes.edit', ['class' => $class->id]) }}" 
+                                               class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit me-1"></i>{{ __('Edit Class') }}
+                                            </a>
+                                        @endif
+                                        <button class="btn btn-secondary btn-sm" type="button"
                                             data-bs-dismiss="modal">{{ __('Close') }}</button>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    <h3 class="p-4">{{ __('No classess to Show') }}</h3>
+                    <h3 class="p-4">{{ __('No classes to Show') }}</h3>
                 @endif
             </div>
         </div>
 
-
         <div class="card-footer d-flex align-items-center justify-content-center">
             {{ $classes->appends(request()->query())->links() }}
         </div>
-
     </div>
 @endsection

@@ -6,7 +6,8 @@ use App\Models\ClassModel;
 use App\Models\Attendance;
 use App\Models\Expense;
 use App\Models\Revenue;
-
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -165,39 +166,56 @@ if (!function_exists('getDay')) {
 
 
 if (!function_exists('getExpenses')) {
-    function getExpenses( $from , $to  )
+    function getExpenses($from, $to)
     {
-        // dd($from, $to);
-        $expense_amount=0 ;
-
-        $expenses = Expense::whereDate('created_at', '>=' , $from)
-        ->whereDate('created_at', '<=' , $to)
-        ->whenSearch(request()->search)
-        ->get();
-        
-        foreach($expenses as $expense){
-            $expense_amount += $expense->expense_amount ;
+        if (!$from || !$to) {
+            return 0;
         }
-        return $expense_amount ;
+
+        return Expense::whereBetween('created_at', [$from, $to])
+            ->whenSearch(request()->search)
+            ->sum('expense_amount');
     }
 }
 
 if (!function_exists('getRevenues')) {
-    function getRevenues( $from , $to  )
+    function getRevenues($from, $to)
     {
-        $revenue_amount = 0;
-
-        $revenues = Revenue::whereDate('created_at', '>=', $from)
-        ->whereDate('created_at', '<=', $to)
-        ->whenSearch(request()->search)
-        ->get();
-        foreach($revenues as $revenue){
-            $revenue_amount += $revenue->revenue_amount ;
+        if (!$from || !$to) {
+            return 0;
         }
-        return $revenue_amount ;
+
+        return Revenue::whereBetween('created_at', [$from, $to])
+            ->whenSearch(request()->search)
+            ->sum('revenue_amount');
     }
 }
 
 
+if (!function_exists('getUsersCount')) {
+    function getUsersCount()
+    {
+        return User::count() - 1; // Subtract 1 if you want to ignore admin
+    }
+}
 
+if (!function_exists('getClassesCount')) {
+    function getClassesCount()
+    {
+        return ClassModel::count();
+    }
+}
 
+if (!function_exists('getStudentsCount')) {
+    function getStudentsCount()
+    {
+        return Student::count();
+    }
+}
+
+if (!function_exists('getTeachersCount')) {
+    function getTeachersCount()
+    {
+        return Teacher::count();
+    }
+}

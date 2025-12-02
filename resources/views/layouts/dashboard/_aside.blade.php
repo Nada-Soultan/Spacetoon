@@ -14,7 +14,7 @@
 
         </div><a class="navbar-brand" href="{{ route('home') }}">
             <div class="d-flex align-items-center py-3"><img class="me-2"
-                    src="{{ asset('assets/img/logo-blue.png') }}" alt="" width="150" />
+                    src="{{ asset('assets/img/logos/spacetoon.png') }}" alt="" width="150" />
             </div>
         </a>
     </div>
@@ -27,7 +27,7 @@
                         <!-- label-->
                         <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
                             <!-- users - roles - countries - settings -->
-                            <div class="col-auto navbar-vertical-label">{{ __('Users & Roles') }}
+                            <div class="col-auto navbar-vertical-label">{{ __('Dashboard') }}
                             </div>
                             <div class="col ps-0">
                                 <hr class="mb-0 navbar-vertical-divider" />
@@ -40,8 +40,8 @@
                                 <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                             class="fas fa-user"></span></span><span
                                         class="nav-link-text ps-1">{{ __('Users') }}</span>
-                                    <span
-                                        class="badge badge-soft-primary m-1">{{ \app\models\User::all()->count() - 1 }}</span>
+                                  <span class="badge badge-soft-primary m-1">{{ getUsersCount() }}</span>
+
                                 </div>
                             </a>
                         @endif
@@ -71,9 +71,8 @@
                                     <span class="nav-link-text ps-1">
                                         {{ __('Classes') }}
                                     </span>
-                                    <span class="badge badge-soft-primary m-1">
-                                        {{ \app\models\ClassModel::all()->count()  }}
-                                    </span>
+                                    <span class="badge badge-soft-primary m-1">{{ getClassesCount() }}</span>
+
                                 </div>
                             </a>
                         @endif
@@ -92,7 +91,8 @@
                                     <span class="nav-link-text ps-1">
                                         {{ __('Teachers') }}
                                     </span>
- 
+ <span class="badge badge-soft-primary m-1">{{ getTeachersCount() }}</span>
+
                                 </div>
                             </a>
                         @endif
@@ -174,9 +174,8 @@
                                 <span class="nav-link-text ps-1">
                                     {{ __('Students') }}
                                 </span>
- <span class="badge badge-soft-primary m-1">
-                                        {{ \app\models\Student::all()->count()  }}
-                                    </span>
+<span class="badge badge-soft-primary m-1">{{ getStudentsCount() }}</span>
+
                             </div>
                         </a>
                     @endif

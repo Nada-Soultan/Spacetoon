@@ -32,7 +32,10 @@
                             <div class="mb-3">
                                 <label class="form-label" for="user_id">{{ __('Select Teacher') }}</label>
 
-                                <select class="form-select @error('user_id') is-invalid @enderror" name="user_id">
+                                <select class="form-select @error('user_id') is-invalid @enderror" name="user_id">   <option value=""selected>Select
+                                          
+                                        </option>
+
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">
                                             {{ $user->name }}

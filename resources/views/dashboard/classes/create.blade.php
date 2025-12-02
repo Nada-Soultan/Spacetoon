@@ -32,7 +32,9 @@
 
                                 <select class="form-select @error('user_id') is-invalid @enderror" name="user_id">
                                             <option value="" disabled selected>Select </option>
-
+         <option value=""selected>Select
+                                          
+                                        </option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">
                                             {{ $user->name }}

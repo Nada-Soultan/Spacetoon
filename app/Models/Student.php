@@ -31,17 +31,11 @@ class Student extends Model
 
 
 
-    public function image()
+    public function images()
     {
 
-        return $this->hasMany(StudentImage::class, 'id', 'image_id');
+        return $this->hasMany(StudentImage::class, 'student_id', 'id');
     }
-
-
-
-
-
-
 
 
     public function scopeWhenSearch($query, $search)

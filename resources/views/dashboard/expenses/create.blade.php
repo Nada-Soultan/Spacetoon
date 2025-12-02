@@ -49,7 +49,7 @@
 
 
                             <div class="mb-3">
-                                <label class="form-label" for="user_id">{{ __('Select teacher') }}</label>
+                                <label class="form-label" for="user_id">{{ __('Select Teacher') }}</label>
 
                                 <select class="form-select @error('user_id') is-invalid @enderror" name="user_id">
                                            <option value="" disabled selected>Select Teacher</option>
@@ -95,7 +95,7 @@
 
                             <div class="mb-3">
                                 <button class="btn btn-primary d-block w-100 mt-3" type="submit"
-                                    name="submit">{{ __('Add New expense') }}</button>
+                                    name="submit">{{ __('Add New Expense') }}</button>
                             </div>
                         </form>
 

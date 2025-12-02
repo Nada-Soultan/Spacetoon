@@ -4,7 +4,7 @@
         data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false"
         aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
     <a class="navbar-brand me-1 me-sm-3" href="{{ route('home') }}">
-        <div class="d-flex align-items-center"><img class="me-2" src="{{ asset('assets/img/logo-blue.png') }}"
+        <div class="d-flex align-items-center"><img class="me-2" src="{{ asset('assets/img/logos/spacetoon.png') }}"
                 alt="" width="150" />
         </div>
     </a>
@@ -18,7 +18,7 @@
 
                 </form>
             </div>
-        </li>
+        </li> 
     </ul>
     <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
         {{-- <li class="nav-item">

@@ -157,78 +157,130 @@
 
                     </table>
 
-                    @foreach ($students as $student)
-                        <div class="modal fade" id="show-task-{{ $student->id }}" tabindex="-1" role="dialog"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
-                                <div class="modal-content position-relative">
-                                    <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
-                                        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
-                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body p-0">
-                                        <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
-                                            <h4 class="mb-1" id="modalExampleDemoLabel">
-                                                {{ __('Details') }}
-                                            </h4>
-                                        </div>
-                                        <div class="p-4 pb-0">
+                @foreach ($students as $student)
+    <div class="modal fade" id="show-task-{{ $student->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content position-relative">
+                <div class="position-absolute top-0 end-0 mt-2 me-2 z-index-1">
+                    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="rounded-top-lg py-3 ps-4 pe-6 bg-light">
+                        <h4 class="mb-1" id="modalExampleDemoLabel">
+                            {{ __('Student Details') }}
+                        </h4>
+                    </div>
+                    <div class="p-4 pb-0">
 
-                                            <div class="table-responsive scrollbar">
-                                                <table class="table table-bordered overflow-hidden">
-                                                    <colgroup>
-                                                        <col class="bg-soft-primary" />
-                                                        <col />
-                                                    </colgroup>
+                        <!-- Student Information Table -->
+                        <div class="table-responsive scrollbar mb-4">
+                            <table class="table table-bordered overflow-hidden">
+                                <colgroup>
+                                    <col class="bg-soft-primary" style="width: 40%;" />
+                                    <col />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>{{ __('Name') }}</strong></td>
+                                        <td>{{ $student->user?->name ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Email') }}</strong></td>
+                                        <td>{{ $student->user?->email ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Phone') }}</strong></td>
+                                        <td>{{ $student->user?->phone ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Gender') }}</strong></td>
+                                        <td>{{ $student->user?->gender ? __(ucfirst($student->user->gender)) : 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Age') }}</strong></td>
+                                        <td>{{ $student->age ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Date of Birth') }}</strong></td>
+                                        <td>{{ $student->date_of_birth ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Date of Join') }}</strong></td>
+                                        <td>{{ $student->date_of_join ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Class') }}</strong></td>
+                                        <td>{{ $student->class?->class_name ?? 'N/A' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Fees of Uniform') }}</strong></td>
+                                        <td>{{ $student->fees_of_uniform ?? '0' }} {{ __('EGP') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>{{ __('Fees of Book') }}</strong></td>
+                                        <td>{{ $student->fees_of_book ?? '0' }} {{ __('EGP') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                                    <tbody>
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Date of Join') }}</td>
-                                                            <td> {{ $student->date_of_join }}</td>
-                                                        </tr>
-
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Age') }}</td>
-                                                            <td> {{ $student->age }}</td>
-                                                        </tr>
-                                                        <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Class') }}</td>
-                                                            <td> {{ $student->class->class_name }}</td>
-                                                        </tr>
-                                                        {{-- <tr class="btn-reveal-trigger">
-                                                            <td>{{ __('Phone') }}</td>
-                                                            <td>
-                                                                @if ($student->user->phone !== null)
-                                                                {{ $student->user->phone }}
-                                                            @else
-                                                                N/A
-                                                            @endif                                                            </td>
-                                                        </tr> --}}
-
-
-
-
-
-
-
-
-                                                    </tbody>
-                                                </table>
+                        <!-- Student Images Section -->
+                        @if($student->images && $student->images->count() > 0)
+                            <div class="mb-4">
+                                <h5 class="mb-3">{{ __('Attached Images') }}</h5>
+                                <div class="row g-3">
+                                    @foreach($student->images as $image)
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="card h-100 shadow-sm">
+                                                <a href="{{ asset('storage/images/students/' . $image->image) }}" 
+                                                   target="_blank" 
+                                                   class="text-decoration-none">
+                                                    <img src="{{ asset('storage/images/students/' . $image->image) }}" 
+                                                         class="card-img-top" 
+                                                         alt="Student Image"
+                                                         style="height: 200px; object-fit: cover; cursor: pointer;"
+                                                         onerror="this.src='{{ asset('storage/images/placeholder.png') }}'">
+                                                </a>
+                                                <div class="card-body p-2 text-center">
+                                                    <small class="text-muted">
+                                                        {{ __('Uploaded') }}: {{ $image->created_at->format('Y-m-d') }}
+                                                    </small>
+                                                </div>
                                             </div>
-
-
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button"
-                                            data-bs-dismiss="modal">{{ __('Close') }}</button>
-
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @else
+                            <div class="alert alert-info mb-4">
+                                <i class="fas fa-info-circle me-2"></i>
+                                {{ __('No images attached for this student') }}
+                            </div>
+                        @endif
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+                        {{ __('Close') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+<style>
+.card img:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+</style>
                 @else
                     <h3 class="p-4">{{ __('No students to Show') }}</h3>
                 @endif
