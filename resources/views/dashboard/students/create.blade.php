@@ -122,7 +122,7 @@
                                     <label class="form-label" for="date_of_birth">{{ __('Date Of Birth') }}</label>
                                     <input class="form-control @error('date_of_birth') is-invalid @enderror" type="date"
                                         autocomplete="on" id="date_of_birth" name="date_of_birth"
-                                        value="{{ old('date_of_join') }}" required />
+                                        value="{{ old('date_of_birth') }}" required />
                                     @error('date_of_birth')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -222,9 +222,8 @@
         <div class="card-footer d-flex align-items-center justify-content-center">
         </div>
     </div>
-@endsection
 
-<script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('image-upload-container');
 
@@ -292,6 +291,9 @@
         updateButtons();
     });
 </script>
+@endsection
+
+
 
 <style>
     .image-upload-row .input-group {
