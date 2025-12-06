@@ -191,7 +191,9 @@
                                                         @if($expense->expense_type == 'teacher_salary')
                                                             <tr class="btn-reveal-trigger">
                                                             <td>{{ __('Teacher Name') }}</td>
-                                                            <td> {{ $expense->user->name }}</td>
+                                                            <td>  {{$expense->user->name?? 'N/A'}}</td>
+                                                           
+
                                                         </tr>
                                                         @endif
                                                         <tr class="btn-reveal-trigger">

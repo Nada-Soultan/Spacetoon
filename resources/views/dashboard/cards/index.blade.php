@@ -55,7 +55,7 @@
                 <tbody>
                     @foreach ($salaryCards as $row)
                         <tr>
-                            <td>{{ $row['teacher']->user->name }}</td>
+                            <td>{{ $row['teacher']->user->name?? 'N/A'}}</td>
                             <td>{{ number_format($row['base_salary'], 2) }}</td>
                             <td>{{ number_format($row['daily_salary'], 2) }}</td>
                             <td>{{ $row['days_off'] }}</td>

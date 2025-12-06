@@ -196,7 +196,7 @@
                                                         </tr>
                                                             <tr class="btn-reveal-trigger">
                                                             <td>{{ __('Student Name') }}</td>
-                                                            <td> {{ $revenue->user->name }}</td>
+                                                            <td> {{ $revenue->user->name?? 'N/A'}}</td>
                                                         </tr>
                                                         <tr class="btn-reveal-trigger">
                                                             <td>{{ __('Expense amount') }}</td>
