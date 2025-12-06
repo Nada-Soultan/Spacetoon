@@ -110,10 +110,11 @@
                                                  data-bs-toggle="modal" 
                                                  data-bs-target="#photo-modal-{{ $user->id }}"
                                                  title="{{ __('Click to view larger photo') }}">
-                                                <img class="rounded-circle"
-                                                    src="{{ asset('storage/images/users/' . $user->profile) }}"
-                                                    alt="{{ $user->name }}"
-                                                    onerror="this.src='{{ asset('assets/img/avatar/avatarmale.png') }}'" />
+                                               <!-- Small avatar in table -->
+<img class="rounded-circle"
+    src="{{ asset('storage/images/users/' . $user->profile) }}"
+    alt="{{ $user->name }}"
+    onerror="this.src='{{ asset('assets/img/avatar/' . ($user->gender == 'female' ? 'avatarfemale.png' : 'avatarmale.png')) }}'" />
                                             </div>
                                             <div class="flex-1">
                                                 <h5 class="mb-0 fs--1">{{ $user->name }}</h5>
@@ -193,10 +194,10 @@
                                             </div>
                                             <div class="modal-body text-center p-4">
                                                 <img src="{{ asset('storage/images/users/' . $user->profile) }}" 
-                                                     class="img-fluid rounded" 
-                                                     alt="{{ $user->name }}"
-                                                     style="max-height: 500px; width: auto;"
-                                                     onerror="this.src='{{ asset('assets/img/avatar/avatarmale.png') }}'">
+     class="img-fluid rounded" 
+     alt="{{ $user->name }}"
+     style="max-height: 500px; width: auto;"
+     onerror="this.src='{{ asset('assets/img/avatar/' . ($user->gender == 'female' ? 'avatarfemale.png' : 'avatarmale.png')) }}'">
                                                 <div class="mt-3">
                                                     <p class="mb-1"><strong>{{ __('Name') }}:</strong> {{ $user->name }}</p>
                                                     <p class="mb-1"><strong>{{ __('Email') }}:</strong> {{ $user->email }}</p>
