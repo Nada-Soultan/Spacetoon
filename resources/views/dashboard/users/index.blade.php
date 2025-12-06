@@ -166,8 +166,8 @@
                                                             href="{{ route('users.activate', ['user' => $user->id]) }}">{{ hasVerifiedPhone($user) ? __('Deactivate') : __('Activate') }}</a>
                                                         <a class="dropdown-item"
                                                             href="{{ route('users.block', ['user' => $user->id]) }}">{{ $user->status == 0 ? __('Block') : __('Unblock') }}</a>
-                                                        <a href="" class="dropdown-item" data-bs-toggle="modal"
-                                                            data-bs-target="#bonus-modal-{{ $user->id }}">{{ __('Add bonus') }}</a>
+                                                        {{-- <a href="" class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#bonus-modal-{{ $user->id }}">{{ __('Add bonus') }}</a> --}}
                                                     @endif
                                                     @if (auth()->user()->hasPermission('users-delete') || auth()->user()->hasPermission('users-trash'))
                                                         <form method="POST"

@@ -159,11 +159,11 @@ class UsersController extends Controller
                     : $user->password,
             ]);
 
-          if ($request->role === 'user_id') {
-    $user->syncRoles([$request->role]);
-} else {
-    $user->syncRoles(['administrator', $request->role]);
-}
+//           if ($request->role === 'user_id') {
+//     $user->syncRoles([$request->role]);
+// } else {
+//     $user->syncRoles(['administrator', $request->role]);
+// }
 
             alertSuccess('user updated successfully', 'تم تعديل المستخدم بنجاح');
             return redirect()->route('users.index');

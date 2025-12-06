@@ -8,9 +8,6 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Attendance;
 
-
-
-
 class AttendanceController extends Controller
 {
     public function __construct()
@@ -67,9 +64,7 @@ public function index()
                 'absence_date'=>"required|date",
                 'no_of_hours'=>"required|integer",
                 'status'=>"required",
-                'reasons'=>"string",
-                'comments'=>"string",
-
+               
             ]);
 
             $attendance = Attendance::create([
@@ -120,8 +115,7 @@ public function index()
                 'absence_date'=>"required|date",
                 'no_of_hours'=>"required|integer",
                 'status'=>"required",
-                'reasons'=>"string",
-                'comments'=>"string",
+              
 
 
             ]);
