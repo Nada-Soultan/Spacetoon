@@ -18,8 +18,8 @@ class UsersSeeder extends Seeder
         $user = User::create([
             'name' => 'superAdmin',
             'email' => '',
-            'password' => bcrypt('01006131794'),
-            'phone' => '01006131794',
+            'password' => bcrypt('01019346846'),
+            'phone' => '01019346846',
             // 'country_id' => '1',
             'gender' => 'male',
             'profile' => 'avatarmale.png',
