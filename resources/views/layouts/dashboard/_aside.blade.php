@@ -160,6 +160,26 @@
                     </a>
                 @endif
 
+
+                 @if (auth()->user()->hasPermission('penalty-read'))
+                    <!-- parent pages-->
+                    <a class="nav-link {{ Route::is('penalty*') ? 'active' : '' }}"
+                        href="{{ route('penalty.index') }}" role="button" data-bs-toggle=""
+                        aria-expanded="false">
+
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon">
+                                <span class="fas fa-user-tag">
+                                </span>
+                            </span>
+                            <span class="nav-link-text ps-1">
+                                {{ __('Penalties') }}
+                            </span>
+
+                        </div>
+                    </a>
+                @endif
+
                     @if (auth()->user()->hasPermission('students-read'))
                         <!-- parent pages-->
                         <a class="nav-link {{ Route::is('students*') ? 'active' : '' }}"

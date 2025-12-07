@@ -52,7 +52,7 @@
                                         </thead>
                                         <tbody>
                                             @php
-                                                $models = ['users', 'roles', 'settings', 'classes','teachers','attendance','expenses','students','revenues','cards'];
+                                                $models = ['users', 'roles', 'settings', 'classes','teachers','attendance','expenses','students','revenues','cards','penalty'];
                                                 $models_ar = ['المدرسينو','المستخدمين', 'الصلاحيات', 'الاعدادات', 'الفصول'];
                                             @endphp
 

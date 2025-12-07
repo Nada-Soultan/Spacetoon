@@ -191,31 +191,66 @@ if (!function_exists('getRevenues')) {
     }
 }
 
-
 if (!function_exists('getUsersCount')) {
     function getUsersCount()
     {
-        return User::count() - 1; // Subtract 1 if you want to ignore admin
+        return User::where('status', 0)
+            ->whereNotNull('phone_verified_at')
+            ->count() - 1; 
     }
 }
 
 if (!function_exists('getClassesCount')) {
     function getClassesCount()
     {
-        return ClassModel::count();
+        return ClassModel::count(); 
     }
 }
 
 if (!function_exists('getStudentsCount')) {
     function getStudentsCount()
     {
-        return Student::count();
+        return Student::whereHas('user', function ($q) {
+                $q->where('status', 0)
+                  ->whereNotNull('phone_verified_at');
+            })
+            ->count();
     }
 }
 
 if (!function_exists('getTeachersCount')) {
     function getTeachersCount()
     {
-        return Teacher::count();
+        return Teacher::whereHas('user', function ($q) {
+                $q->where('status', 0)
+                  ->whereNotNull('phone_verified_at');
+            })
+            ->count();
     }
 }
+
+if (!function_exists('getOvertime')) {
+    function getOvertime($from, $to, $user_id)
+    {
+        return Expense::where('expense_type', 'overtime')
+            ->where('user_id', $user_id)
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->sum('expense_amount');  
+    }
+}
+if (!function_exists('getPenalties')) {
+    function getPenalties($from, $to, $user_id, $type = null)
+    {
+        $query = \App\Models\Penalty::where('user_id', $user_id)
+            ->whereBetween('date', [$from, $to]);
+
+        if ($type) {
+            $query->where('type', $type);
+        }
+
+        return $query->sum('amount'); // total penalty amount
+    }
+}
+
+

@@ -48,6 +48,8 @@
                         <th>Daily Salary</th>
                         <th>Days Off</th>
                         <th>Hours Off</th>
+                        <th>Penalties</th>
+                        <th>Over Time</th>
                         <th>Net Salary</th>
                     </tr>
                 </thead>
@@ -60,6 +62,8 @@
                             <td>{{ number_format($row['daily_salary'], 2) }}</td>
                             <td>{{ $row['days_off'] }}</td>
                             <td>{{ $row['hours_off'] }}</td>
+                            <td>{{ $row['penalties'] }}</td>
+                            <td>{{ number_format($row['overtime'], 2) }}</td>
                             <td class="text-success fw-bold">
                                 {{ number_format($row['net_salary'], 2) }}
                             </td>

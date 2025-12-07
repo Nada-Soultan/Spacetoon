@@ -29,6 +29,10 @@
         <option value="bills" {{ old('expense_type', $expense->expense_type) == 'bills' ? 'selected' : '' }}>Bills</option>
         <option value="maintenance" {{ old('expense_type', $expense->expense_type) == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
         <option value="teacher_salary" {{ old('expense_type', $expense->expense_type) == 'teacher_salary' ? 'selected' : '' }}>Teacher Salary</option>
+           <option value="overtime" {{ old('expense_type', $expense->expense_type) == 'overtime' ? 'selected' : '' }}>Over Time</option>
+        <option value="bus" {{ old('expense_type', $expense->expense_type) == 'bus' ? 'selected' : '' }}>Bus </option>
+        <option value="academy_rental" {{ old('expense_type', $expense->expense_type) == 'academy_rental' ? 'selected' : '' }}>Academy Rental </option>
+
     </select>
 
     @error('expense_type')

@@ -32,6 +32,9 @@
                                     <option value="Uniform Fees" {{ $revenue->revenue_type == 'Uniform Fees' ? 'selected' : '' }}>
                                         Uniform Fees
                                     </option>
+                                       <option value="bus" {{ $revenue->revenue_type == 'bus' ? 'selected' : '' }}>
+                                        Bus
+                                    </option>
                                 </select>
                                 @error('revenue_type')
                                     <div class="alert alert-danger">{{ $message }}</div>

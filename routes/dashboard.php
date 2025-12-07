@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\ExpensesController;
 use App\Http\Controllers\Dashboard\StudentsController;
 use App\Http\Controllers\Dashboard\RevenuesController;
 use App\Http\Controllers\Dashboard\SalaryCardController;
+use App\Http\Controllers\Dashboard\PenaltyController;
 
 
 
@@ -80,8 +81,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['role:superadministrator
     // // salary_card  action
     Route::resource('cards',SalaryCardController::class)->middleware('auth', 'checkverified', 'checkstatus');
 
-
-    // Route::post('/tasks/bulk-action', [TasksController::class, 'bulkAction'])->name('tasks.bulk-action')->middleware('auth', 'checkverified', 'checkstatus');
+ // penalty route
+     Route::resource('penalty', PenaltyController::class)->middleware('auth', 'checkverified', 'checkstatus');
+     Route::get('/trashed-penalty', [PenaltyController::class, 'trashed'])->name('penalty.trashed')->middleware('auth', 'checkverified', 'checkstatus');
+     Route::get('/trashed-penalty/{penalty}', [PenaltyController::class, 'restore'])->name('penalty.restore')->middleware('auth', 'checkverified', 'checkstatus');
 });
 
 

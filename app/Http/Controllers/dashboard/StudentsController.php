@@ -41,7 +41,10 @@ class StudentsController extends Controller
 
     public function index()
     {
-        $students = Student::with(['user', 'class', 'images'])
+        $students = Student::whereHas('user', function ($q) {
+        $q->where('status', 0)
+        ->where('phone_verified_at','!=',null); // Only active users
+    })
             ->whenSearch(request()->search)
             ->latest()
             ->paginate(100);

@@ -47,12 +47,14 @@ class SalaryCardController extends Controller
         foreach ($teachers as $teacher) {
             $daysOff   = getDayOff($from, $to, $teacher->user_id);
             $hoursOff  = getHoursOff($from, $to, $teacher->user_id);
+             $overTimeAmount = getOvertime( $from, $to, $teacher->user_id);
+             $penaltyAmount = getPenalties( $from, $to, $teacher->user_id);
 
             $dailySalary = getDay($teacher->salary);
             $hourValue   = $dailySalary / 8;
 
             $deduction = ($daysOff * $dailySalary) + ($hoursOff * $hourValue);
-            $netSalary = $teacher->salary - $deduction;
+            $netSalary = ($teacher->salary - $deduction - $penaltyAmount) + $overTimeAmount;
 
             $salaryCards[] = [
                 'teacher'      => $teacher,
@@ -61,6 +63,8 @@ class SalaryCardController extends Controller
                 'daily_salary' => round($dailySalary, 2),
                 'base_salary'  => round($teacher->salary, 2),
                 'deduction'    => round($deduction, 2),
+                 'overtime'     => round($overTimeAmount, 2),
+                'penalties'    => round($penaltyAmount, 2), // NEW
                 'net_salary'   => round($netSalary, 2),
             ];
         }

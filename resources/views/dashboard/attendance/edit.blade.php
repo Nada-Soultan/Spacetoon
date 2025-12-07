@@ -15,7 +15,7 @@
                 <div class="col-md-12 d-flex flex-center">
                     <div class="p-4 p-md-5 flex-grow-1">
                         <form method="POST" action="{{ route('attendance.update', ['attendance' => $attendance->id]) }}"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
 
@@ -77,7 +77,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="reasons">{{ __('Reasons') }}</label>
                                 <textarea name="reasons" class="form-control @error('reasons') is-invalid @enderror"
-                                    id="reasons" rows="4" required>{{ $attendance->reasons }}</textarea>
+                                    id="reasons" rows="4" >{{ $attendance->reasons }}</textarea>
                                 @error('reasons')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -87,7 +87,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="comments">{{ __('Comments') }}</label>
                                 <textarea name="comments" class="form-control @error('comments') is-invalid @enderror"
-                                    id="comments" rows="4" required>{{ $attendance->comments }}</textarea>
+                                    id="comments" rows="4" >{{ $attendance->comments }}</textarea>
                                 @error('comments')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

@@ -48,7 +48,7 @@
                                         </thead>
                                         <tbody>
                                             @php
-                                                $models = ['users', 'roles', 'settings', 'classes','teachers','attendance','revenues','students','expenses','cards'];
+                                                $models = ['users', 'roles', 'settings', 'classes','teachers','attendance','revenues','students','expenses','cards','penalty'];
                                                 $models_ar = ['المدرسين','المستخدمين', 'الصلاحيات', 'الاعدادات', 'الفصول'];
                                             @endphp
 

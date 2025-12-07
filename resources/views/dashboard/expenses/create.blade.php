@@ -39,7 +39,15 @@
                                          <option value="Teacher_salary">
                                             Teacher Salary
                                          </option>
-
+                                           <option value="overtime">
+                                            Over Time
+                                         </option>
+                                          <option value="bus">
+                                           Bus
+                                         </option>
+<option value="academey_rental">
+                                           Academy Rental
+                                         </option>
 
                                 </select>
                                 @error('expense_type')

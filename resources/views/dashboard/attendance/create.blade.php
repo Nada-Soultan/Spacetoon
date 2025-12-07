@@ -78,7 +78,7 @@
               id="reasons"
               rows="3"
               class="form-control @error('reasons') is-invalid @enderror"
-              required>{{ old('reasons') }}</textarea>
+              >{{ old('reasons') }}</textarea>
 
     @error('reasons')
         <div class="alert alert-danger">{{ $message }}</div>
@@ -91,7 +91,7 @@
               id="comments"
               rows="3"
               class="form-control @error('comments') is-invalid @enderror"
-              required>{{ old('comments') }}</textarea>
+              >{{ old('comments') }}</textarea>
 
     @error('comments')
         <div class="alert alert-danger">{{ $message }}</div>

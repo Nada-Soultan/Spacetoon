@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('status');
             $table->integer('no_of_hours');
-            $table->text('reasons');
-            $table->text('comments');
+            $table->text('reasons')->nullable();
+            $table->text('comments')->nullable();
             $table->timestamps();
         });
     }
